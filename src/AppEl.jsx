@@ -70,384 +70,6 @@ const SERVICES_FULL = [
 ]
 
 /* ----------------------------------------------------------------
-   Feature Card 1 — Cypriot Meze Course Shuffler
----------------------------------------------------------------- */
-function MezeShuffler() {
-  const items = [
-    { course: 'Πιάτο 1', label: 'Παραδοσιακά Ντιπ & Ψωμί', detail: 'Τζατζίκι, χούμους, ταραμοσαλάτα & ζεστή πίτα' },
-    { course: 'Πιάτο 2', label: 'Ζεστά Ορεκτικά & Χαλούμι', detail: 'Ψητό χαλούμι, καπνιστή λούντζα & ζεστές ελιές' },
-    { course: 'Πιάτο 3', label: 'Κλασικά στα Κάρβουνα', detail: 'Χοιρινό σουβλάκι, πικάντικη σεφταλιά & κοτόπουλο λεμονάτο' },
-    { course: 'Πιάτο 4', label: 'Κλέφτικο στον Ξυλόφουρνο', detail: 'Σιγοψημένο αρνί που λιώνει στο στόμα' },
-    { course: 'Πιάτο 5', label: 'Σπιτικά Γλυκά & Καφές', detail: 'Γλυκός μπακλαβάς, φρέσκα σύκα & κυπριακός καφές' },
-  ]
-  const [stack, setStack] = useState(items)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStack((prev) => {
-        const next = [...prev]
-        next.unshift(next.pop())
-        return next
-      })
-    }, 3200)
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="relative h-44 w-full perspective">
-      {stack.map((item, i) => {
-        const offset = i
-        const total = stack.length
-        return (
-          <div
-            key={item.course}
-            style={{
-              transform: `translateY(${offset * 12}px) translateZ(${-offset * 20}px) scale(${1 - offset * 0.05})`,
-              zIndex: total - offset,
-              opacity: 1 - offset * 0.22,
-              transition: 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s ease',
-            }}
-            className="absolute inset-x-0 top-0 bg-white border border-divider rounded-3xl p-5 shadow-md flex flex-col justify-between h-[150px]"
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-accent-dark bg-accent/10 px-2.5 py-1 rounded-full">
-                {item.course}
-              </span>
-              <span className="font-mono text-[10px] text-muted font-bold">Μενού Μεζέ</span>
-            </div>
-            <div>
-              <div className="font-display text-base sm:text-lg font-bold text-ink leading-tight">
-                {item.label}
-              </div>
-              <div className="text-xs text-muted mt-1 truncate">
-                {item.detail}
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 mt-2">
-              {Array.from({ length: 5 }).map((_, idx) => (
-                <span
-                  key={idx}
-                  className="h-1.5 flex-1 rounded-full transition-all duration-500"
-                  style={{
-                    background: idx === (5 - 1 - offset + 5) % 5 ? '#C46A29' : '#EFEAE2',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Feature Card 2 — Charcoal Grill & Oven Embers (Signature Animation)
----------------------------------------------------------------- */
-function GrillEmberAnim() {
-  const [statusIdx, setStatusIdx] = useState(0)
-  const [count, setCount] = useState(42) // Servings cooked today
-
-  const statuses = [
-    { text: 'Τα κάρβουνα είναι έτοιμα · 180°C', label: 'Έτοιμο', tone: 'orange' },
-    { text: 'Η σχάρα γέμισε · Η σούβλα ψήνεται', label: 'Ψήσιμο', tone: 'red' },
-    { text: 'Ο φούρνος έκλεισε · Το αρνί ψήνεται', label: 'Στον φούρνο', tone: 'primary' },
-    { text: 'Το κλέφτικο είναι έτοιμο · Σερβίρεται τώρα', label: 'Σερβίρισμα', tone: 'orange' },
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStatusIdx((idx) => {
-        const next = (idx + 1) % statuses.length
-        if (statuses[next].label === 'Σερβίρισμα') {
-          setCount((c) => c + 1)
-        }
-        return next
-      })
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Sparkling embers rising up from charcoal bed
-  const embers = [
-    { left: '15%', delay: '0.0s', dur: '2.5s', size: 8 },
-    { left: '28%', delay: '1.2s', dur: '2.8s', size: 11 },
-    { left: '42%', delay: '0.5s', dur: '2.3s', size: 14 },
-    { left: '55%', delay: '1.7s', dur: '2.9s', size: 9 },
-    { left: '68%', delay: '0.8s', dur: '2.6s', size: 12 },
-    { left: '80%', delay: '2.1s', dur: '2.4s', size: 10 },
-    { left: '90%', delay: '0.3s', dur: '2.7s', size: 13 },
-  ]
-
-  // Fixed smoke ripple points on grill surface
-  const smokeRipples = [
-    { left: '25%', delay: '0.2s' },
-    { left: '50%', delay: '1.0s' },
-    { left: '75%', delay: '1.8s' },
-  ]
-
-  const status = statuses[statusIdx]
-  const toneText =
-    status.tone === 'red' ? 'text-accent-dark font-bold' :
-    status.tone === 'orange' ? 'text-amber-600 font-bold' :
-    'text-primary-dark font-bold'
-  const toneDot =
-    status.tone === 'red' ? 'bg-red-500' :
-    status.tone === 'orange' ? 'bg-accent' :
-    'bg-primary'
-
-  return (
-    <div
-      className="relative h-44 w-full rounded-3xl overflow-hidden border border-accent/20 shadow-inner"
-      style={{
-        background: 'linear-gradient(0deg, #1C0F0B 0%, #301710 40%, #170A06 100%)',
-      }}
-    >
-      {/* Soft warm glow (fire atmosphere) */}
-      <div className="absolute -bottom-8 -left-6 h-24 w-36 rounded-full bg-red-600/25 blur-3xl animate-pulse" />
-      <div className="absolute -bottom-4 right-10 h-20 w-32 rounded-full bg-amber-500/20 blur-2xl animate-pulse-slow" />
-
-      {/* Header strip */}
-      <div className="absolute top-3 left-4 right-4 flex items-center justify-between z-20">
-        <div className="flex items-center gap-2">
-          <Flame className="h-4 w-4 text-accent animate-bounce" style={{ animationDuration: '2s' }} />
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-500">
-            Tony's Ψησταριά &amp; Φούρνος
-          </span>
-        </div>
-        <div className="flex items-baseline gap-1 bg-black/40 px-2 py-0.5 rounded-full border border-white/10">
-          <span className="font-display font-bold text-sm text-amber-400 tabular-nums">
-            {String(count).padStart(2, '0')}
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-white/50">
-            μερίδες σήμερα
-          </span>
-        </div>
-      </div>
-
-      {/* Grill hood / top bars rack */}
-      <svg
-        className="absolute left-3 right-3 top-9 h-5 z-10 opacity-40"
-        viewBox="0 0 400 20"
-        preserveAspectRatio="none"
-      >
-        {/* Grill bars */}
-        <line x1="0" y1="10" x2="400" y2="10" stroke="#746A5F" strokeWidth="2" strokeDasharray="4,6" />
-        <rect x="0" y="4" width="400" height="2" fill="#EFEAE2" />
-        <rect x="0" y="14" width="400" height="2" fill="#EFEAE2" />
-      </svg>
-
-      {/* Rising Embers field (reverse raindrop simulation, moving UP) */}
-      <div className="absolute inset-x-0 top-10 bottom-11 overflow-hidden">
-        {embers.map((emb, i) => (
-          <svg
-            key={i}
-            className="absolute bottom-0"
-            style={{
-              left: emb.left,
-              width: `${emb.size}px`,
-              height: `${emb.size * 1.5}px`,
-              animation: `ember-rise ${emb.dur} cubic-bezier(0.25, 1, 0.5, 1) ${emb.delay} infinite`,
-              filter: 'drop-shadow(0 0 4px #D95D39)',
-              transform: 'translateX(-50%)',
-            }}
-            viewBox="0 0 24 36"
-          >
-            <defs>
-              <linearGradient id={`ember-${i}`} x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#EF4444" />
-                <stop offset="60%" stopColor="#F59E0B" />
-                <stop offset="100%" stopColor="#FDE047" />
-              </linearGradient>
-            </defs>
-            {/* Spark shape */}
-            <path
-              d="M12 2 L19 15 C20 18 20 22 18 26 C16 30 12 32 12 32 C12 32 8 30 6 26 C4 22 4 18 5 15 Z"
-              fill={`url(#ember-${i})`}
-            />
-          </svg>
-        ))}
-      </div>
-
-      {/* Glowing hot coal bed at bottom */}
-      <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950 via-red-900 to-transparent flex items-center justify-around px-4">
-        {Array.from({ length: 12 }).map((_, idx) => (
-          <span
-            key={idx}
-            className="h-2 w-4 rounded-full bg-amber-600 animate-pulse"
-            style={{
-              animationDelay: `${idx * 0.25}s`,
-              animationDuration: `${1.5 + (idx % 3) * 0.5}s`,
-              boxShadow: '0 0 8px #D95D39',
-              background: idx % 2 === 0 ? '#D95D39' : '#EF4444',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Heat wavy smoke curls rising */}
-      <div className="absolute top-[50px] left-3 right-3 h-10 pointer-events-none">
-        {smokeRipples.map((r, i) => (
-          <span
-            key={i}
-            className="absolute bottom-0 -translate-x-1/2 rounded-full border border-amber-500/20"
-            style={{
-              left: r.left,
-              width: '10px',
-              height: '10px',
-              animation: `smoke-up 3s ease-out ${r.delay} infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Bottom status */}
-      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-20">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className={`relative h-2 w-2 rounded-full ${toneDot}`}>
-            {status.tone === 'red' && (
-              <span className={`absolute inset-0 rounded-full ${toneDot} animate-ping`} />
-            )}
-          </span>
-          <span
-            key={status.text}
-            className={`font-mono text-[10px] truncate ${toneText}`}
-            style={{ animation: 'ember-fadein 0.4s ease-out' }}
-          >
-            {status.text}
-          </span>
-        </div>
-        <span
-          className={`font-mono text-[9px] uppercase tracking-[0.2em] whitespace-nowrap pl-2 ${toneText}`}
-        >
-          {status.label}
-        </span>
-      </div>
-
-      <style>{`
-        @keyframes ember-rise {
-          0%   { transform: translate(-50%, 10px); opacity: 0; }
-          15%  { opacity: 1; }
-          80%  { opacity: 0.8; }
-          100% { transform: translate(-50%, -90px) rotate(${30 + Math.random() * 60}deg); opacity: 0; }
-        }
-        @keyframes smoke-up {
-          0%   { transform: translateX(-50%) translateY(0px) scale(0.6); opacity: 0.8; filter: blur(1px); }
-          60%  { transform: translateX(-50%) translateY(-25px) scale(2.2); opacity: 0.3; filter: blur(3px); }
-          100% { transform: translateX(-50%) translateY(-40px) scale(3.5); opacity: 0; filter: blur(5px); }
-        }
-        @keyframes ember-fadein {
-          from { opacity: 0; transform: translateY(3px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Feature Card 3 — Table Reservation Booking Scheduler
----------------------------------------------------------------- */
-function TableScheduler() {
-  const days = ['Δευ', 'Τρι', 'Τετ', 'Πεμ', 'Παρ', 'Σαβ', 'Κυρ']
-  const [step, setStep] = useState(0) // 0..4
-  const activeDay = 5 // Saturday (Sat)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStep((prev) => (prev + 1) % 5)
-    }, 1600)
-    return () => clearInterval(interval)
-  }, [])
-
-  const cursorPos = (() => {
-    switch (step) {
-      case 0:
-        return { x: 10, y: 100, opacity: 0 }
-      case 1:
-        return { x: 50, y: 55, opacity: 1 }
-      case 2:
-        return { x: 45 + activeDay * 36, y: 55, opacity: 1 }
-      case 3:
-        return { x: 45 + activeDay * 36, y: 55, opacity: 1 }
-      case 4:
-        return { x: 140, y: 120, opacity: 1 }
-      default:
-        return { x: 10, y: 100, opacity: 0 }
-    }
-  })()
-
-  return (
-    <div className="relative h-44 w-full bg-white border border-divider rounded-3xl p-5 overflow-hidden">
-      <div className="flex items-center justify-between mb-3">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
-          Αύγουστος 2026 · Δείπνο
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-accent bg-accent/10 px-2.5 py-0.5 rounded-full font-bold">
-          Κράτηση Τραπεζιού
-        </span>
-      </div>
-
-      {/* Calendar grid */}
-      <div className="grid grid-cols-7 gap-1.5 mb-4">
-        {days.map((d, idx) => (
-          <div
-            key={idx}
-            className={`flex flex-col items-center justify-center h-[42px] rounded-xl text-xs font-medium transition-all duration-300 ${
-              step >= 3 && idx === activeDay
-                ? 'bg-primary text-white scale-110 shadow-lg shadow-primary/30'
-                : 'bg-background text-ink'
-            }`}
-          >
-            <span className="font-mono text-[8px] text-muted">{d}</span>
-            <span className="font-display font-extrabold text-sm">{idx + 10}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Action button */}
-      <button
-        className={`w-full py-2.5 rounded-2xl font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
-          step === 4
-            ? 'bg-accent text-white scale-[1.01] shadow-md shadow-accent/30'
-            : 'bg-divider/40 text-muted'
-        }`}
-      >
-        {step >= 3 ? (
-          <>
-            <CheckCircle2 className="h-3.5 w-3.5 text-white" />
-            Έγινε κράτηση για Σαβ 15.
-          </>
-        ) : (
-          'Επιλέξτε ένα βράδυ'
-        )}
-      </button>
-
-      {/* Animated mouse cursor */}
-      <div
-        className="absolute pointer-events-none transition-all duration-500 ease-out z-20"
-        style={{
-          left: `${cursorPos.x}px`,
-          top: `${cursorPos.y}px`,
-          opacity: cursorPos.opacity,
-          transform: step === 3 ? 'scale(0.85)' : 'scale(1)',
-        }}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M5 3L19 12L12 13L9 20L5 3Z"
-            fill="#241C15"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
    Navbar
 ---------------------------------------------------------------- */
 function Navbar({ onSwitchLanguage }) {
@@ -655,12 +277,12 @@ function Hero() {
       <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16 pt-24">
         <div className="max-w-4xl">
           <p className="hero-meta font-mono text-xs uppercase tracking-[0.25em] text-accent font-bold mb-5">
-            Στην Αγια Ναπα απο το 1993
+            Στην Αγια Ναπα απο το 1980
           </p>
 
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-4xl sm:text-6xl md:text-7xl">
-              Αυθεντική Κυπριακή Γαστρονομία.
+              Καλωσορίσατε.
             </span>
             <span
               className="hero-line-2 block font-serif italic font-medium text-accent text-5xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
@@ -696,119 +318,6 @@ function Hero() {
         <div className="absolute bottom-8 right-6 sm:right-12 hidden md:flex flex-col items-center gap-2 text-white/50">
           <span className="font-mono uppercase text-[9px] tracking-[0.3em] text-accent">Κυλιση</span>
           <div className="h-10 w-px bg-gradient-to-b from-accent to-transparent" />
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Features Section (3 interactive cards)
----------------------------------------------------------------- */
-function Features() {
-  const sectionRef = useRef(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.feature-card', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-          once: true,
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.15,
-      })
-      gsap.from('.feature-heading > *', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 92%',
-          once: true,
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.08,
-      })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
-
-  const cards = [
-    {
-      eyebrow: '01 / Μοίρασμα',
-      heading: 'Κυπριακός Μεζές',
-      sub: 'Ένα ταξίδι γεύσεων',
-      text: 'Ο παραδοσιακός μας Μεζές αποτελείται από περισσότερα από είκοσι φρεσκομαγειρεμένα μικρά πιάτα που έρχονται στο τραπέζι σας με χαλαρό ρυθμό. Ιδανικό για να τα μοιραστείτε.',
-      Component: MezeShuffler,
-    },
-    {
-      eyebrow: '02 / Κληρονομιά',
-      heading: 'Φωτιά & Ξυλόφουρνοι',
-      sub: 'Σχάρα με Κάρβουνα & Κλέφτικο',
-      text: 'Ζήστε τη μαγεία των εξωτερικών μας ξυλόφουρνων όπου το αρνί ψήνεται όλο το βράδυ, και απολαύστε το άρωμα της νόστιμης σούβλας ψημένης απευθείας στα κάρβουνα.',
-      Component: GrillEmberAnim,
-    },
-    {
-      eyebrow: '03 / Φιλοξενία',
-      heading: 'Εύκολες Κρατήσεις',
-      sub: 'Κλείστε το τραπέζι σας',
-      text: 'Είτε θέλετε να καθίσετε κάτω από τις λεμονιές είτε μέσα στη ρουστίκ ταβέρνα μας, η απλή διαδικασία κράτησης εξασφαλίζει το τραπέζι σας.',
-      Component: TableScheduler,
-    },
-  ]
-
-  return (
-    <section id="services" ref={sectionRef} className="relative py-28 sm:py-36 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="feature-heading max-w-3xl mb-16 sm:mb-24">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
-            ∕ Καλώς ήρθατε στο τραπέζι μας
-          </span>
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Τρεις Πυλώνες.
-            <span className="block font-serif italic font-medium text-accent mt-1">
-              Μία Αληθινή Εμπειρία.
-            </span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {cards.map((card, idx) => (
-            <article
-              key={idx}
-              className="feature-card group relative bg-surface border border-divider rounded-5xl p-7 hover:border-accent/30 transition-colors duration-500 shadow-sm hover:shadow-xl hover:shadow-accent/10"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted font-bold">
-                  {card.eyebrow}
-                </span>
-                <ArrowUpRight
-                  className="h-5 w-5 text-ink/20 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
-                  strokeWidth={1.8}
-                />
-              </div>
-
-              {/* Interactive component */}
-              <div className="mb-6">
-                <card.Component />
-              </div>
-
-              <div className="mt-4">
-                <h3 className="font-display font-bold text-2xl text-ink leading-tight">
-                  {card.heading}
-                </h3>
-                <p className="font-serif italic text-accent text-sm mt-1">
-                  {card.sub}
-                </p>
-                <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
-              </div>
-            </article>
-          ))}
         </div>
       </div>
     </section>
@@ -886,7 +395,7 @@ function Pillars() {
       target: 33,
       suffix: '+',
       label: 'Χρόνια Παράδοσης',
-      desc: 'Από το 1993, η οικογένειά μας σερβίρει τοπικά πιάτα σε ταξιδιώτες και ντόπιους στην καρδιά της Αγίας Νάπας.',
+      desc: 'Από το 1980, η οικογένειά μας σερβίρει τοπικά πιάτα σε ταξιδιώτες και ντόπιους στην καρδιά της Αγίας Νάπας.',
     },
     {
       n: '02',
@@ -1034,7 +543,7 @@ function Protocol() {
       title: 'Παρέα & Ποτά',
       tagline: 'Καλώς ήρθατε κάτω από τις λεμονιές.',
       text: 'Καθίστε στην ολάνθιστη αυλή μας, στη σκιά των λεμονόδεντρων. Η βραδιά σας ξεκινάει με την "Παρέα" – να είστε μαζί με αυτούς που αγαπάτε. Σερβίρουμε δροσερό κυπριακό Brandy Sour, τοπική μπύρα ΚΕΟ ή μια κρύα κανάτα κρασί του σπιτιού, συνοδευόμενα από ζεστές πίτες, φρέσκιες ελιές και ντιπ.',
-      image: '/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg',
+      image: '/photo.jpg',
       alt: 'Ρουστίκ ατμόσφαιρα στην αυλή της Tonys Taverna',
       meta: 'Το Δείπνο Ξεκινά',
     },
@@ -1043,16 +552,16 @@ function Protocol() {
       title: 'Το Ταξίδι του Μεζέ',
       tagline: 'Μια ήσυχη αφθονία γεύσεων.',
       text: 'Στον Tony δεν υπάρχει βιασύνη. Τις επόμενες δύο ώρες, οι σερβιτόροι μας θα σας φέρουν πάνω από είκοσι διαφορετικά παραδοσιακά κυπριακά πιάτα σε άνετο ρυθμό. Από ζεστό ψητό χαλούμι, τραγανή λούντζα και πικάντικη σεφταλιά, μέχρι φρέσκες ντομάτες και ηλιόλουστη φέτα.',
-      image: '/tonys-taverna-182466.webp',
+      image: '/meze.jpg',
       alt: 'Κυπριακός μεζές με ντιπ, πίτα και ψητά πιάτα',
       meta: 'Το Κυρίως Πιάτο',
     },
     {
       num: '03',
       title: 'Το Μυστικό του Φούρνου',
-      tagline: 'Σιγοψημένη αγάπη από το 1993.',
+      tagline: 'Σιγοψημένη αγάπη από το 1980.',
       text: 'Η πραγματική κορύφωση του γεύματος. Οι εξωτερικοί μας ξυλόφουρνοι ανάβουν τα χαράματα. Το θρυλικό αρνί (Κλέφτικο) καρυκεύεται απαλά και σφραγίζεται, στη συνέχεια σιγοψήνεται για 8 ώρες. Το κρέας είναι τόσο τρυφερό που πέφτει από το κόκαλο με ένα άγγιγμα, και σερβίρεται με νόστιμες κυπριακές πατάτες.',
-      image: '/tonys-taverna-182479.webp',
+      image: '/caption.jpg',
       alt: 'Κλασικό τρυφερό και ζουμερό Αρνί Κλέφτικο με πατάτες λεμονάτες',
       meta: 'Το Σήμα Κατατεθέν μας',
     },
@@ -1638,7 +1147,7 @@ function Footer() {
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
-              Από το 1993, η οικογένειά μας σερβίρει αυθεντικούς μεζέδες, τραγανή σούβλα και το καλύτερο κλέφτικο στην ολάνθιστη αυλή μας στην Αγία Νάπα.
+              Από το 1980, η οικογένειά μας σερβίρει αυθεντικούς μεζέδες, τραγανή σούβλα και το καλύτερο κλέφτικο στην ολάνθιστη αυλή μας στην Αγία Νάπα.
             </p>
             <p className="font-mono text-[9px] uppercase tracking-widest text-white/30 mt-6">
               ΑΦΜ: CY1009893T
@@ -1743,8 +1252,7 @@ export default function AppEl({ onSwitchLanguage }) {
       <Navbar onSwitchLanguage={onSwitchLanguage} />
       <main>
         <Hero />
-        <Features />
-        <Pillars />
+                <Pillars />
         <Protocol />
         <ServicesGrid />
         <TrustSignals />

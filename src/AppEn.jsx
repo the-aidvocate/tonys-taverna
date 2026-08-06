@@ -70,384 +70,6 @@ const SERVICES_FULL = [
 ]
 
 /* ----------------------------------------------------------------
-   Feature Card 1 — Cypriot Meze Course Shuffler
----------------------------------------------------------------- */
-function MezeShuffler() {
-  const items = [
-    { course: 'Course 1', label: 'Traditional Dips & Bread', detail: 'Tzatziki, hummus, taramosalata & warm pita bread' },
-    { course: 'Course 2', label: 'Hot Starters & Halloumi', detail: 'Grilled halloumi, smoked lountza pork & warm olives' },
-    { course: 'Course 3', label: 'Charcoal Grill Classics', detail: 'Pork souvlaki, spiced sheftalia & lemon chicken' },
-    { course: 'Course 4', label: 'Clay Oven Kleftiko', detail: 'Slow-baked lamb shoulder that falls off the bone' },
-    { course: 'Course 5', label: 'Homemade Sweets & Coffee', detail: 'Sweet baklava, fresh Cypriot figs & local coffee' },
-  ]
-  const [stack, setStack] = useState(items)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStack((prev) => {
-        const next = [...prev]
-        next.unshift(next.pop())
-        return next
-      })
-    }, 3200)
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="relative h-44 w-full perspective">
-      {stack.map((item, i) => {
-        const offset = i
-        const total = stack.length
-        return (
-          <div
-            key={item.course}
-            style={{
-              transform: `translateY(${offset * 12}px) translateZ(${-offset * 20}px) scale(${1 - offset * 0.05})`,
-              zIndex: total - offset,
-              opacity: 1 - offset * 0.22,
-              transition: 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s ease',
-            }}
-            className="absolute inset-x-0 top-0 bg-white border border-divider rounded-3xl p-5 shadow-md flex flex-col justify-between h-[150px]"
-          >
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-accent-dark bg-accent/10 px-2.5 py-1 rounded-full">
-                {item.course}
-              </span>
-              <span className="font-mono text-[10px] text-muted font-bold">Meze Menu</span>
-            </div>
-            <div>
-              <div className="font-display text-base sm:text-lg font-bold text-ink leading-tight">
-                {item.label}
-              </div>
-              <div className="text-xs text-muted mt-1 truncate">
-                {item.detail}
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 mt-2">
-              {Array.from({ length: 5 }).map((_, idx) => (
-                <span
-                  key={idx}
-                  className="h-1.5 flex-1 rounded-full transition-all duration-500"
-                  style={{
-                    background: idx === (5 - 1 - offset + 5) % 5 ? '#C46A29' : '#EFEAE2',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Feature Card 2 — Charcoal Grill & Oven Embers (Signature Animation)
----------------------------------------------------------------- */
-function GrillEmberAnim() {
-  const [statusIdx, setStatusIdx] = useState(0)
-  const [count, setCount] = useState(42) // Servings cooked today
-
-  const statuses = [
-    { text: 'Charcoal embers are ready · 180°C', label: 'Ready', tone: 'orange' },
-    { text: 'Grill loaded · Souvla sizzling', label: 'Grilling', tone: 'red' },
-    { text: 'Clay oven sealed · Lamb roasting', label: 'Baking', tone: 'primary' },
-    { text: 'Kleftiko ready · Served hot now', label: 'Serving', tone: 'orange' },
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStatusIdx((idx) => {
-        const next = (idx + 1) % statuses.length
-        if (statuses[next].label === 'Serverer') {
-          setCount((c) => c + 1)
-        }
-        return next
-      })
-    }, 2500)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Sparkling embers rising up from charcoal bed
-  const embers = [
-    { left: '15%', delay: '0.0s', dur: '2.5s', size: 8 },
-    { left: '28%', delay: '1.2s', dur: '2.8s', size: 11 },
-    { left: '42%', delay: '0.5s', dur: '2.3s', size: 14 },
-    { left: '55%', delay: '1.7s', dur: '2.9s', size: 9 },
-    { left: '68%', delay: '0.8s', dur: '2.6s', size: 12 },
-    { left: '80%', delay: '2.1s', dur: '2.4s', size: 10 },
-    { left: '90%', delay: '0.3s', dur: '2.7s', size: 13 },
-  ]
-
-  // Fixed smoke ripple points on grill surface
-  const smokeRipples = [
-    { left: '25%', delay: '0.2s' },
-    { left: '50%', delay: '1.0s' },
-    { left: '75%', delay: '1.8s' },
-  ]
-
-  const status = statuses[statusIdx]
-  const toneText =
-    status.tone === 'red' ? 'text-accent-dark font-bold' :
-    status.tone === 'orange' ? 'text-amber-600 font-bold' :
-    'text-primary-dark font-bold'
-  const toneDot =
-    status.tone === 'red' ? 'bg-red-500' :
-    status.tone === 'orange' ? 'bg-accent' :
-    'bg-primary'
-
-  return (
-    <div
-      className="relative h-44 w-full rounded-3xl overflow-hidden border border-accent/20 shadow-inner"
-      style={{
-        background: 'linear-gradient(0deg, #1C0F0B 0%, #301710 40%, #170A06 100%)',
-      }}
-    >
-      {/* Soft warm glow (fire atmosphere) */}
-      <div className="absolute -bottom-8 -left-6 h-24 w-36 rounded-full bg-red-600/25 blur-3xl animate-pulse" />
-      <div className="absolute -bottom-4 right-10 h-20 w-32 rounded-full bg-amber-500/20 blur-2xl animate-pulse-slow" />
-
-      {/* Header strip */}
-      <div className="absolute top-3 left-4 right-4 flex items-center justify-between z-20">
-        <div className="flex items-center gap-2">
-          <Flame className="h-4 w-4 text-accent animate-bounce" style={{ animationDuration: '2s' }} />
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-amber-500">
-            Tony's Grill &amp; Ovn
-          </span>
-        </div>
-        <div className="flex items-baseline gap-1 bg-black/40 px-2 py-0.5 rounded-full border border-white/10">
-          <span className="font-display font-bold text-sm text-amber-400 tabular-nums">
-            {String(count).padStart(2, '0')}
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-widest text-white/50">
-            serveringer i dag
-          </span>
-        </div>
-      </div>
-
-      {/* Grill hood / top bars rack */}
-      <svg
-        className="absolute left-3 right-3 top-9 h-5 z-10 opacity-40"
-        viewBox="0 0 400 20"
-        preserveAspectRatio="none"
-      >
-        {/* Grill bars */}
-        <line x1="0" y1="10" x2="400" y2="10" stroke="#746A5F" strokeWidth="2" strokeDasharray="4,6" />
-        <rect x="0" y="4" width="400" height="2" fill="#EFEAE2" />
-        <rect x="0" y="14" width="400" height="2" fill="#EFEAE2" />
-      </svg>
-
-      {/* Rising Embers field (reverse raindrop simulation, moving UP) */}
-      <div className="absolute inset-x-0 top-10 bottom-11 overflow-hidden">
-        {embers.map((emb, i) => (
-          <svg
-            key={i}
-            className="absolute bottom-0"
-            style={{
-              left: emb.left,
-              width: `${emb.size}px`,
-              height: `${emb.size * 1.5}px`,
-              animation: `ember-rise ${emb.dur} cubic-bezier(0.25, 1, 0.5, 1) ${emb.delay} infinite`,
-              filter: 'drop-shadow(0 0 4px #D95D39)',
-              transform: 'translateX(-50%)',
-            }}
-            viewBox="0 0 24 36"
-          >
-            <defs>
-              <linearGradient id={`ember-${i}`} x1="0%" y1="100%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="#EF4444" />
-                <stop offset="60%" stopColor="#F59E0B" />
-                <stop offset="100%" stopColor="#FDE047" />
-              </linearGradient>
-            </defs>
-            {/* Spark shape */}
-            <path
-              d="M12 2 L19 15 C20 18 20 22 18 26 C16 30 12 32 12 32 C12 32 8 30 6 26 C4 22 4 18 5 15 Z"
-              fill={`url(#ember-${i})`}
-            />
-          </svg>
-        ))}
-      </div>
-
-      {/* Glowing hot coal bed at bottom */}
-      <div className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-red-950 via-red-900 to-transparent flex items-center justify-around px-4">
-        {Array.from({ length: 12 }).map((_, idx) => (
-          <span
-            key={idx}
-            className="h-2 w-4 rounded-full bg-amber-600 animate-pulse"
-            style={{
-              animationDelay: `${idx * 0.25}s`,
-              animationDuration: `${1.5 + (idx % 3) * 0.5}s`,
-              boxShadow: '0 0 8px #D95D39',
-              background: idx % 2 === 0 ? '#D95D39' : '#EF4444',
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Heat wavy smoke curls rising */}
-      <div className="absolute top-[50px] left-3 right-3 h-10 pointer-events-none">
-        {smokeRipples.map((r, i) => (
-          <span
-            key={i}
-            className="absolute bottom-0 -translate-x-1/2 rounded-full border border-amber-500/20"
-            style={{
-              left: r.left,
-              width: '10px',
-              height: '10px',
-              animation: `smoke-up 3s ease-out ${r.delay} infinite`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Bottom status */}
-      <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-20">
-        <div className="flex items-center gap-2 min-w-0">
-          <span className={`relative h-2 w-2 rounded-full ${toneDot}`}>
-            {status.tone === 'red' && (
-              <span className={`absolute inset-0 rounded-full ${toneDot} animate-ping`} />
-            )}
-          </span>
-          <span
-            key={status.text}
-            className={`font-mono text-[10px] truncate ${toneText}`}
-            style={{ animation: 'ember-fadein 0.4s ease-out' }}
-          >
-            {status.text}
-          </span>
-        </div>
-        <span
-          className={`font-mono text-[9px] uppercase tracking-[0.2em] whitespace-nowrap pl-2 ${toneText}`}
-        >
-          {status.label}
-        </span>
-      </div>
-
-      <style>{`
-        @keyframes ember-rise {
-          0%   { transform: translate(-50%, 10px); opacity: 0; }
-          15%  { opacity: 1; }
-          80%  { opacity: 0.8; }
-          100% { transform: translate(-50%, -90px) rotate(${30 + Math.random() * 60}deg); opacity: 0; }
-        }
-        @keyframes smoke-up {
-          0%   { transform: translateX(-50%) translateY(0px) scale(0.6); opacity: 0.8; filter: blur(1px); }
-          60%  { transform: translateX(-50%) translateY(-25px) scale(2.2); opacity: 0.3; filter: blur(3px); }
-          100% { transform: translateX(-50%) translateY(-40px) scale(3.5); opacity: 0; filter: blur(5px); }
-        }
-        @keyframes ember-fadein {
-          from { opacity: 0; transform: translateY(3px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Feature Card 3 — Table Reservation Booking Scheduler
----------------------------------------------------------------- */
-function TableScheduler() {
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  const [step, setStep] = useState(0) // 0..4
-  const activeDay = 5 // Saturday (Sat)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStep((prev) => (prev + 1) % 5)
-    }, 1600)
-    return () => clearInterval(interval)
-  }, [])
-
-  const cursorPos = (() => {
-    switch (step) {
-      case 0:
-        return { x: 10, y: 100, opacity: 0 }
-      case 1:
-        return { x: 50, y: 55, opacity: 1 }
-      case 2:
-        return { x: 45 + activeDay * 36, y: 55, opacity: 1 }
-      case 3:
-        return { x: 45 + activeDay * 36, y: 55, opacity: 1 }
-      case 4:
-        return { x: 140, y: 120, opacity: 1 }
-      default:
-        return { x: 10, y: 100, opacity: 0 }
-    }
-  })()
-
-  return (
-    <div className="relative h-44 w-full bg-white border border-divider rounded-3xl p-5 overflow-hidden">
-      <div className="flex items-center justify-between mb-3">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-muted">
-          August 2026 · Dinner
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-accent bg-accent/10 px-2.5 py-0.5 rounded-full font-bold">
-          Table Booking
-        </span>
-      </div>
-
-      {/* Calendar grid */}
-      <div className="grid grid-cols-7 gap-1.5 mb-4">
-        {days.map((d, idx) => (
-          <div
-            key={idx}
-            className={`flex flex-col items-center justify-center h-[42px] rounded-xl text-xs font-medium transition-all duration-300 ${
-              step >= 3 && idx === activeDay
-                ? 'bg-primary text-white scale-110 shadow-lg shadow-primary/30'
-                : 'bg-background text-ink'
-            }`}
-          >
-            <span className="font-mono text-[8px] text-muted">{d}</span>
-            <span className="font-display font-extrabold text-sm">{idx + 10}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Action button */}
-      <button
-        className={`w-full py-2.5 rounded-2xl font-semibold text-xs transition-all duration-300 flex items-center justify-center gap-1.5 ${
-          step === 4
-            ? 'bg-accent text-white scale-[1.01] shadow-md shadow-accent/30'
-            : 'bg-divider/40 text-muted'
-        }`}
-      >
-        {step >= 3 ? (
-          <>
-            <CheckCircle2 className="h-3.5 w-3.5 text-white" />
-            Table Reserved Sat 15.
-          </>
-        ) : (
-          'Select an evening'
-        )}
-      </button>
-
-      {/* Animated mouse cursor */}
-      <div
-        className="absolute pointer-events-none transition-all duration-500 ease-out z-20"
-        style={{
-          left: `${cursorPos.x}px`,
-          top: `${cursorPos.y}px`,
-          opacity: cursorPos.opacity,
-          transform: step === 3 ? 'scale(0.85)' : 'scale(1)',
-        }}
-      >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path
-            d="M5 3L19 12L12 13L9 20L5 3Z"
-            fill="#241C15"
-            stroke="white"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </div>
-  )
-}
-
-/* ----------------------------------------------------------------
    Navbar
 ---------------------------------------------------------------- */
 function Navbar({ onSwitchLanguage }) {
@@ -655,18 +277,18 @@ function Hero() {
       <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16 pt-24">
         <div className="max-w-4xl">
           <p className="hero-meta font-mono text-xs uppercase tracking-[0.25em] text-accent font-bold mb-5">
-            Established in Ayia Napa Since 1993
+            Established in Ayia Napa Since 1980
           </p>
 
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
             <span className="hero-line-1 block text-4xl sm:text-6xl md:text-7xl">
-              Authentic Cypriot Gastronomy.
+              Καλωσορίσατε. Welcome.
             </span>
             <span
               className="hero-line-2 block font-serif italic font-medium text-accent text-5xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
               style={{ lineHeight: '0.92' }}
             >
-              Under the Lemon Trees.
+              To Our Family Table.
             </span>
           </h1>
 
@@ -696,119 +318,6 @@ function Hero() {
         <div className="absolute bottom-8 right-6 sm:right-12 hidden md:flex flex-col items-center gap-2 text-white/50">
           <span className="font-mono uppercase text-[9px] tracking-[0.3em] text-accent">Scroll</span>
           <div className="h-10 w-px bg-gradient-to-b from-accent to-transparent" />
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ----------------------------------------------------------------
-   Features Section (3 interactive cards)
----------------------------------------------------------------- */
-function Features() {
-  const sectionRef = useRef(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.feature-card', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-          once: true,
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.15,
-      })
-      gsap.from('.feature-heading > *', {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 92%',
-          once: true,
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.08,
-      })
-    }, sectionRef)
-    return () => ctx.revert()
-  }, [])
-
-  const cards = [
-    {
-      eyebrow: '01 / Sharing',
-      heading: 'Cypriot Meze',
-      sub: 'A journey of flavors',
-      text: 'Our traditional Meze consists of over twenty freshly prepared small dishes brought to your table at a relaxed pace. Perfect for sharing.',
-      Component: MezeShuffler,
-    },
-    {
-      eyebrow: '02 / Heritage',
-      heading: 'Fire & Clay Ovens',
-      sub: 'Charcoal Grill & Kleftiko',
-      text: 'Experience the magic of our outdoor clay ovens where the lamb is baked overnight, and enjoy the aroma of savory Souvla grilled directly over the coals.',
-      Component: GrillEmberAnim,
-    },
-    {
-      eyebrow: '03 / Hospitality',
-      heading: 'Easy Reservations',
-      sub: 'Reserve your evening',
-      text: 'Whether you want to sit under the lemon trees or indoors in our rustic taverna, our simple booking ensures your dinner table.',
-      Component: TableScheduler,
-    },
-  ]
-
-  return (
-    <section id="services" ref={sectionRef} className="relative py-28 sm:py-36 px-6 sm:px-10 lg:px-16">
-      <div className="max-w-7xl mx-auto">
-        <div className="feature-heading max-w-3xl mb-16 sm:mb-24">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-primary">
-            ∕ Welcome to our table
-          </span>
-          <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-ink mt-4 leading-[1.05] tracking-tight">
-            Three Pillars.
-            <span className="block font-serif italic font-medium text-accent mt-1">
-              One True Experience.
-            </span>
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {cards.map((card, idx) => (
-            <article
-              key={idx}
-              className="feature-card group relative bg-surface border border-divider rounded-5xl p-7 hover:border-accent/30 transition-colors duration-500 shadow-sm hover:shadow-xl hover:shadow-accent/10"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted font-bold">
-                  {card.eyebrow}
-                </span>
-                <ArrowUpRight
-                  className="h-5 w-5 text-ink/20 group-hover:text-accent group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all"
-                  strokeWidth={1.8}
-                />
-              </div>
-
-              {/* Interactive component */}
-              <div className="mb-6">
-                <card.Component />
-              </div>
-
-              <div className="mt-4">
-                <h3 className="font-display font-bold text-2xl text-ink leading-tight">
-                  {card.heading}
-                </h3>
-                <p className="font-serif italic text-accent text-sm mt-1">
-                  {card.sub}
-                </p>
-                <p className="text-muted text-[15px] mt-4 leading-relaxed">{card.text}</p>
-              </div>
-            </article>
-          ))}
         </div>
       </div>
     </section>
@@ -886,7 +395,7 @@ function Pillars() {
       target: 33,
       suffix: '+',
       label: 'Years of Tradition',
-      desc: 'Since 1993, our family has been serving regional dishes to travelers and locals in the heart of Ayia Napa.',
+      desc: 'Since 1980, our family has been serving regional dishes to travelers and locals in the heart of Ayia Napa.',
     },
     {
       n: '02',
@@ -1034,7 +543,7 @@ function Protocol() {
       title: 'Parea & Drinks',
       tagline: 'Welcome under the lemon trees.',
       text: 'Settle into our flower-filled courtyard in the shade of the lemons. Your evening starts with "Parea" – togetherness with those you care about. We serve a cool Cypriot Brandy Sour, a local Keo beer, or a cold jug of house wine, accompanied by warm flatbreads and our fresh olives and dips.',
-      image: '/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg',
+      image: '/photo.jpg',
       alt: 'Rustic courtyard atmosphere at Tonys Taverna',
       meta: 'The Dinner Starts',
     },
@@ -1043,16 +552,16 @@ function Protocol() {
       title: 'The Meze Journey',
       tagline: 'A quiet horn of plenty.',
       text: 'There is no rush at Tony\'s. Over the next two hours, our waiters will bring you over twenty different traditional Cypriot dishes at a comfortable pace. From sizzling grilled halloumi, crispy fried lountza and spicy sheftalia sausages, to fresh tomatoes and sun-ripened feta.',
-      image: '/tonys-taverna-182466.webp',
+      image: '/meze.jpg',
       alt: 'Cypriot meze arrangement with dips, pita and grill dishes',
       meta: 'The Main Act',
     },
     {
       num: '03',
       title: 'The Secret of the Oven',
-      tagline: 'Slow-baked love since 1993.',
+      tagline: 'Slow-baked love since 1980.',
       text: 'The true climax of the meal. Our outdoor clay ovens are lit at dawn. The legendary lamb (Kleftiko) is gently seasoned and sealed, then slow-baked for 8 hours. The meat is so tender it falls right off the bone at a touch, and is served with tasty Cypriot potatoes.',
-      image: '/tonys-taverna-182479.webp',
+      image: '/caption.jpg',
       alt: 'Classic tender and juicy Lamb Kleftiko with lemon potatoes',
       meta: 'The Signature Dish',
     },
@@ -1164,11 +673,11 @@ function ServicesGrid() {
       <div className="relative max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 mb-14">
           <div>
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">∕ Smagskortet</span>
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-accent">∕ Our Menu</span>
             <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl mt-4 leading-[1.05] tracking-tight">
-              Traditionelle Retter,
+              Traditional Dishes,
               <span className="block font-serif italic font-medium text-accent mt-1">
-                lavet med kærlighed.
+                made with love.
               </span>
             </h2>
           </div>
@@ -1190,7 +699,7 @@ function ServicesGrid() {
                     <Icon className="h-5 w-5 text-accent group-hover:text-white" strokeWidth={2} />
                   </div>
                   <span className="font-mono text-[10px] text-white/35 uppercase tracking-widest font-bold">
-                    Kort {String(i + 1).padStart(2, '0')}
+                    Card {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
                 <h3 className="font-display font-bold text-xl sm:text-2xl mb-3">{svc.title}</h3>
@@ -1638,7 +1147,7 @@ function Footer() {
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>
             <p className="text-white/50 text-sm leading-relaxed max-w-xs">
-              Since 1993, our family has served authentic meze dishes, crispy souvla and the best lamb kleftiko in our blooming courtyard in Ayia Napa.
+              Since 1980, our family has served authentic meze dishes, crispy souvla and the best lamb kleftiko in our blooming courtyard in Ayia Napa.
             </p>
             <p className="font-mono text-[9px] uppercase tracking-widest text-white/30 mt-6">
               VAT ID: CY1009893T
@@ -1743,8 +1252,7 @@ export default function AppEn({ onSwitchLanguage }) {
       <Navbar onSwitchLanguage={onSwitchLanguage} />
       <main>
         <Hero />
-        <Features />
-        <Pillars />
+                <Pillars />
         <Protocol />
         <ServicesGrid />
         <TrustSignals />
