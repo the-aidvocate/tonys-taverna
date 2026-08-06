@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -93,10 +93,7 @@ function Navbar({ onSwitchLanguage }) {
       >
         <div className="flex items-center justify-between gap-6">
           <a href="#home" className="flex items-center gap-2 group">
-            <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-primary">
-              <UtensilsCrossed className="h-4.5 w-4.5 text-white" strokeWidth={2.4} />
-              <span className="absolute inset-0 rounded-full ring-2 ring-primary/30 group-hover:ring-primary/50 transition animate-pulse-slow" />
-            </span>
+            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 w-12 object-cover rounded-full shadow-lg border-2 border-white/20" />
             <span
               className={`font-display font-extrabold tracking-tight text-base sm:text-lg ${
                 scrolled ? 'text-ink' : 'text-white'
@@ -265,9 +262,9 @@ function Hero() {
 
       {/* Decorative floating warm spark particles */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 right-[15%] h-2.5 w-2.5 rounded-full bg-accent/60 animate-float" style={{ animationDelay: '0s' }} />
-        <div className="absolute top-[50%] right-[8%] h-1.5 w-1.5 rounded-full bg-amber-500/40 animate-float" style={{ animationDelay: '1.8s' }} />
-        <div className="absolute top-[35%] right-[22%] h-2 w-2 rounded-full bg-red-500/50 animate-float" style={{ animationDelay: '3.2s' }} />
+        <div className="absolute top-1/4 right-[15%] h-2.5 w-2.5 rounded-full bg-white/60 animate-float" style={{ animationDelay: '0s' }} />
+        <div className="absolute top-[50%] right-[8%] h-1.5 w-1.5 rounded-full bg-primary-light/60 animate-float" style={{ animationDelay: '1.8s' }} />
+        <div className="absolute top-[35%] right-[22%] h-2 w-2 rounded-full bg-accent/50 animate-float" style={{ animationDelay: '3.2s' }} />
       </div>
 
       {/* Top frame line */}
@@ -277,7 +274,7 @@ function Hero() {
       <div className="relative z-10 flex min-h-[100dvh] flex-col items-center justify-center text-center px-6 sm:px-10 lg:px-16 pt-24">
         <div className="max-w-4xl">
           <p className="hero-meta font-mono text-xs uppercase tracking-[0.25em] text-accent font-bold mb-5">
-            Στην Αγια Ναπα απο το 1980
+            Από το 1980
           </p>
 
           <h1 className="font-display font-extrabold text-white leading-[0.95] tracking-tight">
@@ -288,7 +285,7 @@ function Hero() {
               className="hero-line-2 block font-serif italic font-medium text-accent text-5xl sm:text-7xl md:text-8xl lg:text-9xl mt-2"
               style={{ lineHeight: '0.92' }}
             >
-              Κάτω από τις Λεμονιές.
+              Αυθεντικές Κυπριακές Γεύσεις.
             </span>
           </h1>
 
@@ -541,7 +538,7 @@ function Protocol() {
     {
       num: '01',
       title: 'Παρέα & Ποτά',
-      tagline: 'Καλώς ήρθατε κάτω από τις λεμονιές.',
+      tagline: 'Καλώς ήρθατε Αυθεντικές Κυπριακές Γεύσεις.',
       text: 'Καθίστε στην ολάνθιστη αυλή μας, στη σκιά των λεμονόδεντρων. Η βραδιά σας ξεκινάει με την "Παρέα" – να είστε μαζί με αυτούς που αγαπάτε. Σερβίρουμε δροσερό κυπριακό Brandy Sour, τοπική μπύρα ΚΕΟ ή μια κρύα κανάτα κρασί του σπιτιού, συνοδευόμενα από ζεστές πίτες, φρέσκιες ελιές και ντιπ.',
       image: '/photo.jpg',
       alt: 'Ρουστίκ ατμόσφαιρα στην αυλή της Tonys Taverna',
@@ -1142,7 +1139,7 @@ function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="h-9 w-9 rounded-full bg-accent flex items-center justify-center">
-                <UtensilsCrossed className="h-4.5 w-4.5 text-white" strokeWidth={2.4} />
+                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-10 w-10 object-cover rounded-full" />
               </span>
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>
@@ -1262,3 +1259,12 @@ export default function AppEl({ onSwitchLanguage }) {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
