@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unknown-property */
+﻿/* eslint-disable react/no-unknown-property */
 'use client';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
@@ -222,7 +222,7 @@ function Band({
   curve.curveType = 'chordal';
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-  if (!nodes || !materials) return null;
+  
 
   return (
     <>
@@ -250,19 +250,7 @@ function Band({
               drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))
             )}
           >
-            <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={cardMap}
-                map-anisotropy={16}
-                clearcoat={isMobile ? 0 : 1}
-                clearcoatRoughness={0.15}
-                roughness={0.9}
-                metalness={0.8}
-              />
-            </mesh>
-            <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
-            <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
-          </group>
+            <mesh position={[0, 0, 0]}><boxGeometry args={[0.85, 1.3, 0.015]} /><meshPhysicalMaterial map={cardMap} clearcoat={isMobile ? 0 : 1} clearcoatRoughness={0.15} roughness={0.9} metalness={0.8} /></mesh><mesh position={[0, 0.7, 0]}><cylinderGeometry args={[0.05, 0.05, 0.2]} /><meshStandardMaterial color="#888" roughness={0.3} metalness={1} /></mesh><mesh position={[0, 0.6, 0]}><boxGeometry args={[0.2, 0.1, 0.1]} /><meshStandardMaterial color="#444" /></mesh></group>
         </RigidBody>
       </group>
       <mesh ref={band}>
