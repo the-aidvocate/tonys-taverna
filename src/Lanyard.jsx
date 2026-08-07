@@ -115,7 +115,7 @@ function Band({
   
   // Need to provide a GLB path - using a placeholder path for now
   // We'll need to download a default card.glb if it doesn't exist
-  const { nodes, materials } = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/card/card.glb');
+  const { nodes, materials } = useGLTF('/card.glb');
   
   const texture = useTexture(lanyardImage || BLANK_PIXEL);
   const frontTex = useTexture(frontImage || BLANK_PIXEL);
