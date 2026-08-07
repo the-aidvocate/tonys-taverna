@@ -1,5 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import Lanyard from './Lanyard';
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
@@ -289,13 +290,7 @@ function Hero() {
             </span>
           </h1>
 
-          <div className="mt-8 flex items-center justify-center gap-4 hero-meta">
-            <img src="/tony-owner.jpg" alt="Tony" className="h-16 w-16 rounded-full border-2 border-white shadow-xl object-cover" />
-            <div className="text-left leading-tight">
-              <p className="text-white font-bold text-sm">Tony</p>
-              <p className="text-white/70 text-xs">Owner & Founder</p>
-            </div>
-          </div>
+          <div className="w-full max-w-xs sm:max-w-sm mx-auto h-[400px] mt-4 z-20 pointer-events-auto relative"><div className="absolute -top-4 right-0 bg-white/20 backdrop-blur-md border border-white/30 px-3 py-1.5 rounded-full text-white text-xs font-bold shadow-xl pointer-events-none z-30">Tony — Owner & Founder</div><Lanyard frontImage="/tony-owner.jpg" backImage="/tonys-logo.jpg" lanyardImage="/photo.jpg" imageFit="cover" /></div>
 
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
             Dive into a true Cypriot journey of flavors at <span className="text-white font-semibold">Tony's Taverna</span>. Our family courtyard offers sizzling meze, slow-roasted kleftiko, and crisp grills served with heartwarming hospitality.
@@ -1267,6 +1262,7 @@ export default function AppEn({ onSwitchLanguage }) {
     </div>
   )
 }
+
 
 
 
