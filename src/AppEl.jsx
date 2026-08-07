@@ -1,6 +1,5 @@
 ﻿import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
-import Lanyard from './Lanyard';
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
@@ -289,8 +288,6 @@ function Hero() {
               Αυθεντικές Κυπριακές Γεύσεις.
             </span>
           </h1>
-
-          <div className="w-full max-w-xs sm:max-w-sm mx-auto h-[400px] mt-4 z-20 pointer-events-auto relative"><div className="absolute -top-4 right-0 bg-white/20 backdrop-blur-md border border-white/30 px-3 py-1.5 rounded-full text-white text-xs font-bold shadow-xl pointer-events-none z-30">Tony — Ιδρυτής</div><Lanyard frontImage="/tony-owner.jpg" backImage="/tonys-logo.jpg" lanyardImage="/photo.jpg" imageFit="cover" /></div>
 
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
             Βυθιστείτε σε ένα αληθινό κυπριακό ταξίδι γεύσεων στην <span className="text-white font-semibold">Tony's Taverna</span>. Η οικογενειακή μας αυλή προσφέρει λαχταριστούς μεζέδες, σιγοψημένο κλέφτικο και ζουμερά ψητά, σερβιρισμένα με ζεστή φιλοξενία.
@@ -1262,6 +1259,7 @@ export default function AppEl({ onSwitchLanguage }) {
     </div>
   )
 }
+
 
 
 
