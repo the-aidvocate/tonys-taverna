@@ -93,7 +93,7 @@ function Navbar({ onSwitchLanguage }) {
       >
         <div className="flex items-center justify-between gap-6">
           <a href="#home" className="flex items-center gap-2 group">
-            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-14 sm:h-16 w-14 sm:w-16 object-cover rounded-full shadow-xl ring-2 ring-white/30" />
+            <img src="/tonys-logo.jpg" alt="Logo" className="h-14 sm:h-16 w-14 sm:w-16 object-cover rounded-full shadow-xl ring-2 ring-white/30" />
             <span
               className={`font-display font-extrabold tracking-tight text-base sm:text-lg ${
                 scrolled ? 'text-ink' : 'text-white'
@@ -125,7 +125,7 @@ function Navbar({ onSwitchLanguage }) {
               } transition-colors`}
               aria-label="Αλλαγή σε Αγγλικά"
             >
-              🇬🇧 EN
+              <img src="/flag-uk.svg" alt="English" className="h-4 w-6 rounded shadow-sm inline-block mr-1.5 object-cover" /> EN
             </button>
             <a
               href="#kontakt"
@@ -143,7 +143,7 @@ function Navbar({ onSwitchLanguage }) {
                 scrolled ? 'text-ink' : 'text-white'
               }`}
             >
-              🇬🇧 EN
+              <img src="/flag-uk.svg" alt="English" className="h-4 w-6 rounded shadow-sm inline-block mr-1.5 object-cover" /> EN
             </button>
             <button
               onClick={() => setOpen(true)}
@@ -289,6 +289,14 @@ function Hero() {
             </span>
           </h1>
 
+          <div className="mt-8 flex items-center justify-center gap-4 hero-meta">
+            <img src="/tony-owner.jpg" alt="Tony" className="h-16 w-16 rounded-full border-2 border-white shadow-xl object-cover" />
+            <div className="text-left leading-tight">
+              <p className="text-white font-bold text-sm">Tony</p>
+              <p className="text-white/70 text-xs">Ιδρυτής</p>
+            </div>
+          </div>
+
           <p className="hero-meta mx-auto max-w-xl text-white/75 text-base sm:text-lg mt-8 leading-relaxed">
             Βυθιστείτε σε ένα αληθινό κυπριακό ταξίδι γεύσεων στην <span className="text-white font-semibold">Tony's Taverna</span>. Η οικογενειακή μας αυλή προσφέρει λαχταριστούς μεζέδες, σιγοψημένο κλέφτικο και ζουμερά ψητά, σερβιρισμένα με ζεστή φιλοξενία.
           </p>
@@ -389,7 +397,7 @@ function Pillars() {
     {
       n: '01',
       title: 'Ιστορία',
-      target: 33,
+      target: 46,
       suffix: '+',
       label: 'Χρόνια Παράδοσης',
       desc: 'Από το 1980, η οικογένειά μας σερβίρει τοπικά πιάτα σε ταξιδιώτες και ντόπιους στην καρδιά της Αγίας Νάπας.',
@@ -1139,7 +1147,7 @@ function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="h-9 w-9 rounded-full bg-accent flex items-center justify-center">
-                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 sm:h-14 w-12 sm:w-14 object-cover rounded-full shadow-md" />
+                <img src="/tonys-logo.jpg" alt="Logo" className="h-12 sm:h-14 w-12 sm:w-14 object-cover rounded-full shadow-md" />
               </span>
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>
