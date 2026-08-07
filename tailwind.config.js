@@ -4,11 +4,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#0047AB',        // Traditional Cobalt Blue
-        'primary-dark': '#003380',   // Darker Cobalt Blue
-        'primary-light': '#336BBA', // Lighter Cobalt Blue
-        accent: '#C46A29',          // Terracotta Gold
-        'accent-dark': '#9A4C1B',    // Accent dark
+        primary: '#0D5EAF',        // Traditional Cobalt Blue
+        'primary-dark': '#094B8F',   // Darker Cobalt Blue
+        'primary-light': '#3388D4', // Lighter Cobalt Blue
+        accent: '#00A3E0',          // Terracotta Gold
+        'accent-dark': '#0083B5',    // Accent dark
         background: '#FDFBF7',      // Warm Village Stone / Cream Off-white
         surface: '#FFFFFF',
         ink: '#241C15',             // Warm Charcoal

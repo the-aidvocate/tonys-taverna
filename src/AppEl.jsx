@@ -93,7 +93,7 @@ function Navbar({ onSwitchLanguage }) {
       >
         <div className="flex items-center justify-between gap-6">
           <a href="#home" className="flex items-center gap-2 group">
-            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 w-12 object-cover rounded-full shadow-lg border-2 border-white/20" />
+            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-14 sm:h-16 w-14 sm:w-16 object-cover rounded-full shadow-xl ring-2 ring-white/30" />
             <span
               className={`font-display font-extrabold tracking-tight text-base sm:text-lg ${
                 scrolled ? 'text-ink' : 'text-white'
@@ -558,7 +558,7 @@ function Protocol() {
       title: 'Το Μυστικό του Φούρνου',
       tagline: 'Σιγοψημένη αγάπη από το 1980.',
       text: 'Η πραγματική κορύφωση του γεύματος. Οι εξωτερικοί μας ξυλόφουρνοι ανάβουν τα χαράματα. Το θρυλικό αρνί (Κλέφτικο) καρυκεύεται απαλά και σφραγίζεται, στη συνέχεια σιγοψήνεται για 8 ώρες. Το κρέας είναι τόσο τρυφερό που πέφτει από το κόκαλο με ένα άγγιγμα, και σερβίρεται με νόστιμες κυπριακές πατάτες.',
-      image: '/caption.jpg',
+      image: '/tonys-taverna-182479.webp',
       alt: 'Κλασικό τρυφερό και ζουμερό Αρνί Κλέφτικο με πατάτες λεμονάτες',
       meta: 'Το Σήμα Κατατεθέν μας',
     },
@@ -1139,7 +1139,7 @@ function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="h-9 w-9 rounded-full bg-accent flex items-center justify-center">
-                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-10 w-10 object-cover rounded-full" />
+                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 sm:h-14 w-12 sm:w-14 object-cover rounded-full shadow-md" />
               </span>
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>

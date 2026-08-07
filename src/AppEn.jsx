@@ -93,7 +93,7 @@ function Navbar({ onSwitchLanguage }) {
       >
         <div className="flex items-center justify-between gap-6">
           <a href="#home" className="flex items-center gap-2 group">
-            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 w-12 object-cover rounded-full shadow-lg border-2 border-white/20" />
+            <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-14 sm:h-16 w-14 sm:w-16 object-cover rounded-full shadow-xl ring-2 ring-white/30" />
             <span
               className={`font-display font-extrabold tracking-tight text-base sm:text-lg ${
                 scrolled ? 'text-ink' : 'text-white'
@@ -558,7 +558,7 @@ function Protocol() {
       title: 'The Secret of the Oven',
       tagline: 'Slow-baked love since 1980.',
       text: 'The true climax of the meal. Our outdoor clay ovens are lit at dawn. The legendary lamb (Kleftiko) is gently seasoned and sealed, then slow-baked for 8 hours. The meat is so tender it falls right off the bone at a touch, and is served with tasty Cypriot potatoes.',
-      image: '/caption.jpg',
+      image: '/tonys-taverna-182479.webp',
       alt: 'Classic tender and juicy Lamb Kleftiko with lemon potatoes',
       meta: 'The Signature Dish',
     },
@@ -1139,7 +1139,7 @@ function Footer() {
           <div className="col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <span className="h-9 w-9 rounded-full bg-accent flex items-center justify-center">
-                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-10 w-10 object-cover rounded-full" />
+                <img src="/6b08b95f-f56f-45a2-97c6-c79166443ce5.jpg" alt="Logo" className="h-12 sm:h-14 w-12 sm:w-14 object-cover rounded-full shadow-md" />
               </span>
               <span className="font-display font-bold text-lg">Tony's Taverna</span>
             </div>
